@@ -1,38 +1,155 @@
-.App {
-  text-align: center;
+html {
+  height: 100vh;
+  width: 100vw;
+  /* overflow: hidden; */
+  color-scheme: dark;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url("../img/2.png");
+  background-position: center;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.login-form {
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  box-sizing: border-box;
+  padding: 30px;
+  background-color: #0808081f;
+  border-radius: 40px;
+  backdrop-filter: blur(7px);
+  border: 1px #2f2f2f solid;
+  box-shadow: 0 0 5px black;
+
+  margin-top: 50vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 650px;
+  height: 500px;
+  transform: translateY(calc(-50% - 50px));
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+.main-title-big {
+  text-align: center;
+  color: white;
+  font-size: 68px;
+  margin-top: 250px;
+  margin-bottom: 30px;
+}
+
+.main-title-small {
+  text-align: center;
+  color: white;
+  font-size: 42px;
+  height: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#magonsky-industries-title {
+  display: inline-block;
+  font-size: 42px;
+  height: 50px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+  width: 400px;
+  overflow: hidden;
+  margin-left: calc(50vw + 40px);
+}
+
+#magonsky-industries-title > span {
+  display: inline-block;
+  transform: translate(-100%);
+}
+
+#magonsky-industries {
+  opacity: 0;
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+}
+
+#magonsky-industries .cls-1 {
+  fill: none;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  stroke-width: 2px;
+}
+
+.bigger-stroke > * {
+  stroke-width: 4px !important;
+}
+
+@keyframes dashes {
   to {
-    transform: rotate(360deg);
+      stroke-dashoffset: 0;
   }
+}
+
+.main-container {
+  width: 80vw;
+  height: calc(100vh - 110px);
+  box-sizing: border-box;
+  margin: auto;
+  padding-bottom: 30px;
+}
+
+.panel {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 30px;
+  background-color: #0808081f;
+  border-radius: 40px;
+  backdrop-filter: blur(7px);
+  border: 1px #2f2f2f solid;
+  box-shadow: 0 0 5px black;
+  display: flex;
+  flex-direction: column;
+
+  transition: 200ms;
+  opacity: 0;
+}
+
+.header {
+  font-size: 40px;
+  margin: 10px auto;
+}
+
+.loans-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.loan {
+  background-color: #ffffff0e;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.loan-info {
+  display: flex;
+}
+
+.loan-info-item {
+  flex: 1;
+}
+
+.loan-title {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.loan-desc {
+  margin: 0;
+  margin-left: 5px;
 }
