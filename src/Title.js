@@ -12,14 +12,14 @@ const getTransforms = () => {
 }
 
 function Title(props) {
-    const [entryEnded, setEntryEnded] = useState(false)
-    
     const svgRef = useRef()
+    const [entryEnded, setEntryEnded] = useState(false)
 
     const duration = parseInt(props.entryDuration) || 1000
     const endingDuration = parseInt(props.endingDuration) || 300
-    const size = (window.innerWidth > 700) ? 300 : 150
+    const mobile = (window.innerWidth < 700)
     
+    const size = mobile ? 150 : 300
     const scale = 300 / size
     const line1StartPosition = -(window.innerWidth - size) / 2 * scale
     const line2StartPosition = (window.innerWidth + size) / 2 * scale
@@ -105,6 +105,7 @@ function Title(props) {
             svg.style.transition = `transform ${rotateDuration}ms ease`
             svgTransforms.rotate = "rotate(58.23deg)"
             svg.style.transform = getTransforms()
+            svg.style.position = "absolute"
         }, entryDuration);
 
         setTimeout(() => {
@@ -140,12 +141,15 @@ function Title(props) {
     useEffect(() => {
         const svg = svgRef.current
 
-        const animLoggedIn = () => {    
+        const animLoggedIn = () => {   
+            const scaleLogo = mobile ? .5 : .3
+            const offsetLogo = mobile ? 30 : 100
+            
             //slideup
             setTimeout(() => {
                 svg.style.transition = `transform ${endingDuration * 0.8}ms ease`
-                svgTransforms.translate = "translate(-50%, calc(-50vh - 100px))"
-                svgTransforms.scale = "scale(0.3)"
+                svgTransforms.translate = `translate(-50%, calc(-50vh - ${offsetLogo}px))`
+                svgTransforms.scale = `scale(${scaleLogo})`
                 svg.style.transform = getTransforms()
             }, endingDuration * 0.2);
             
@@ -153,9 +157,9 @@ function Title(props) {
             setTimeout(() => {
                 svg.classList.add("bigger-stroke")
     
-                const centerOffset = 10 + 177
+                const centerOffset = mobile ? 70 : (10 + 177)
                 svg.style.transition = `transform ${endingDuration}ms ease`
-                svgTransforms.translate = `translate(calc(-50% - ${centerOffset}px), calc(-50vh - 100px))`
+                svgTransforms.translate = `translate(calc(-50% - ${centerOffset}px), calc(-50vh - ${offsetLogo}px))`
                 svg.style.transform = getTransforms()
                 setTimeout(() => {
                     svg.style.transition = ""
@@ -164,17 +168,25 @@ function Title(props) {
                 setTextElement(
                     <LoggedIn 
                         titleStyles={{transition: `transform ${endingDuration}ms`, transform: `translate(-${centerOffset}px)`}}
-                        titleTextStyles={{transition: `transform ${endingDuration}ms`, transform: "translate(0%)"}}
+                        titleTextStyles={{transition: `transform ${endingDuration}ms`, transform: "translate(0)"}}
                     />
                 )
             }, endingDuration)
         }
 
         const animNotLoggedIn = () => {
+            const offset = mobile ? 60 : 100
             setTimeout(() => {
-                svg.style.transition = `transform ${endingDuration * 0.8}ms ease`
-                svgTransforms.translate = "translate(-50%, calc(-50% - 50px))"
+                svg.style.transition = `transform ${endingDuration}ms ease`
+                svgTransforms.translate = `translate(-50%, calc(-50% - ${offset}px))`
                 svg.style.transform = getTransforms()
+
+                setTextElement(
+                    <NotLoggedIn 
+                        titleStyles={{transition: `transform ${endingDuration}ms ease`, transform: `translateY(-100%)`, top: `calc(50vh + ${offset}px)`}}
+                        titleTextStyles={{transition: `transform ${endingDuration}ms ease`, transform: `translateY(0)`}}
+                    />
+                )
             }, endingDuration * 0.2);
         }
 
@@ -190,16 +202,16 @@ function Title(props) {
                     break;
                     
                 default:
-                    console.log("loading anim")
+                    console.log("LOADING anim")
                     break;
             }
         }
-    }, [endingDuration, entryEnded, props.status])
+    }, [endingDuration, entryEnded, props.status, mobile])
 
     
     return (
         <div id="logo-container">
-            <svg id="magonsky-industries" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" height={size} width="100%" ref={svgRef}>
+            <svg id="magonsky-industries" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" height={size} width={entryEnded ? 300 : "100%"} ref={svgRef}>
                 {/* line x2 135.11 - polyline 1st 148.47 */}
                 <line id="a1" className="cls-1" x1={line1StartPosition} y1="115.92" x2="141.79" y2="115.92" >
                     <animate attributeName="x1" to="25.57" begin="indefinite" dur=".3s" calcMode="spline" keyTimes="0; 1" keySplines="0 0 0.58 1" fill="freeze" />
@@ -243,8 +255,29 @@ const LoggedIn = (props) => {
     }, [props.titleStyles, props.titleTextStyles])
 
     return (
-        <div id="magonsky-industries-title" style={titleStyles}>
+        <div id="title-loggedin" style={titleStyles}>
             <span style={titleTextStyles}>Magonsky Industries</span>
+        </div>
+    )
+}
+
+const NotLoggedIn = (props) => {
+    const [titleStyles, setTitleStyles] = useState({})
+    const [titleTextStyles, setTitleTextStyles] = useState({})
+
+    useEffect(() => {
+        requestAnimationFrame(() => {
+            setTitleStyles(props.titleStyles)
+            setTitleTextStyles(props.titleTextStyles)
+        });
+    }, [props.titleStyles, props.titleTextStyles])
+
+    return (
+        <div id="title-notloggedin" style={titleStyles}>
+            <span style={titleTextStyles}>
+                Magonsky <br />
+                Industries
+            </span>
         </div>
     )
 }

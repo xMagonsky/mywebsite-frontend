@@ -7,11 +7,19 @@ html {
 
 body {
   margin: 0;
+  /* overflow: hidden; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url("../img/2.png");
   background-position: center;
   color: white;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
 .login-form {
@@ -35,35 +43,29 @@ body {
   transform: translateY(calc(-50% - 50px));
 }
 
-.main-title-big {
+#title-notloggedin {
+  position: relative;
   text-align: center;
-  color: white;
-  font-size: 68px;
-  margin-top: 250px;
-  margin-bottom: 30px;
+  overflow: hidden;
 }
 
-.main-title-small {
-  text-align: center;
-  color: white;
-  font-size: 42px;
-  height: 50px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-#magonsky-industries-title {
+#title-notloggedin > span {
   display: inline-block;
+  transform: translateY(-100%);
+  font-size: 32px;
+}
+
+#title-loggedin {
   font-size: 42px;
   height: 50px;
+  width: 355px;
   margin-top: 25px;
   margin-bottom: 20px;
-  width: 400px;
   overflow: hidden;
   margin-left: calc(50vw + 40px);
 }
 
-#magonsky-industries-title > span {
+#title-loggedin > span {
   display: inline-block;
   transform: translate(-100%);
 }
@@ -152,4 +154,15 @@ body {
 .loan-desc {
   margin: 0;
   margin-left: 5px;
+}
+
+@media only screen and (max-width: 700px) {
+  #title-notloggedin > span {
+    font-size: 22px;
+  }
+  #title-loggedin {
+    font-size: 24px;
+    margin-top: 18px;
+    width: 120px;
+  }
 }
