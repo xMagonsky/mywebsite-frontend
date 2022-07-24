@@ -61,7 +61,7 @@ function LoginContainer() {
 }
 
 
-function LoginForm(props) {
+function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault()

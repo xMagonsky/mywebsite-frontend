@@ -15,9 +15,25 @@ function Title(props) {
     const svgRef = useRef()
     const [entryEnded, setEntryEnded] = useState(false)
 
+    const [mobile, setMobile] = useState((window.innerWidth <= 700))
+    useEffect(() => {
+        const checkWidth = () => {
+            (window.innerWidth <= 700) ? setMobile(true) : setMobile(false)
+        }
+
+        window.addEventListener("resize", checkWidth)
+        return () => window.removeEventListener("resize", checkWidth)
+    }, [])
+
+    useEffect(()=>{
+        console.log("changed")
+    }, [mobile])
+
+
+
     const duration = parseInt(props.entryDuration) || 1000
     const endingDuration = parseInt(props.endingDuration) || 300
-    const mobile = (window.innerWidth < 700)
+    //const mobile = (window.innerWidth < 700)
     
     const size = mobile ? 150 : 300
     const scale = 300 / size
@@ -141,10 +157,25 @@ function Title(props) {
     useEffect(() => {
         const svg = svgRef.current
 
-        const animLoggedIn = () => {   
+        const animLoggedIn = () => {
             const scaleLogo = mobile ? .5 : .3
             const offsetLogo = mobile ? 30 : 100
             
+            if (svg.dataset.animated) {
+                const centerOffset = mobile ? 70 : (10 + 177)
+                svg.style.transition = ""
+                svgTransforms.scale = `scale(${scaleLogo})`
+                svgTransforms.translate = `translate(calc(-50% - ${centerOffset}px), calc(-50vh - ${offsetLogo}px))`
+                svg.style.transform = getTransforms()
+                setTextElement(
+                    <LoggedIn 
+                        titleStyles={{transform: `translate(-${centerOffset}px)`}}
+                        titleTextStyles={{transform: "translate(0)"}}
+                    />
+                )
+                return
+            }
+                
             //slideup
             setTimeout(() => {
                 svg.style.transition = `transform ${endingDuration * 0.8}ms ease`
@@ -163,6 +194,7 @@ function Title(props) {
                 svg.style.transform = getTransforms()
                 setTimeout(() => {
                     svg.style.transition = ""
+                    svg.dataset.animated = true
                 }, endingDuration);
     
                 setTextElement(
@@ -175,15 +207,16 @@ function Title(props) {
         }
 
         const animNotLoggedIn = () => {
-            const offset = mobile ? 60 : 100
+            const offsetLogo = mobile ? -40 : -70
+            const offsetText = mobile ? 80 : 130
             setTimeout(() => {
                 svg.style.transition = `transform ${endingDuration}ms ease`
-                svgTransforms.translate = `translate(-50%, calc(-50% - ${offset}px))`
+                svgTransforms.translate = `translate(-50%, calc(-50% + ${offsetLogo}px))`
                 svg.style.transform = getTransforms()
 
                 setTextElement(
                     <NotLoggedIn 
-                        titleStyles={{transition: `transform ${endingDuration}ms ease`, transform: `translateY(-100%)`, top: `calc(50vh + ${offset}px)`}}
+                        titleStyles={{transition: `transform ${endingDuration}ms ease`, transform: `translateY(-100%)`, top: `calc(50vh + ${offsetText}px)`}}
                         titleTextStyles={{transition: `transform ${endingDuration}ms ease`, transform: `translateY(0)`}}
                     />
                 )
