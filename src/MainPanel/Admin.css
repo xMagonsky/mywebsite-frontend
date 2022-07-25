@@ -1,0 +1,17 @@
+.admin-ctn {
+    flex-grow: 1;
+}
+
+.admin-buttons-ctn {
+    text-align: center;
+}
+
+.back-button {
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.admin-buttons-ctn button {
+    margin: 20px;
+    padding: 10px;
+}

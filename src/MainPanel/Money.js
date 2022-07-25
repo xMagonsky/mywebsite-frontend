@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { APIreq } from "../helpers"
+import Loans from "./Loans"
 
 function Money() {
     const [loans, setLoans] = useState([])
 
     useEffect(() => {
         APIreq({
-            url: "/money/loans"
+            url: "/money/myloans"
         }, (status, result) => {
             if (status !== 200) {
                 console.log(status, result)
@@ -20,35 +21,9 @@ function Money() {
         <>
             <h2 className="header">Lista dlugow</h2>
             <div className="loans-container">
-                {
-                    loans.map((loan) => {
-                        return <Loan key={loan.id} loan={loan} />
-                    })
-                }
+                <Loans loans={loans} />
             </div>
         </>
-    )
-}
-
-
-function Loan(props) {
-    return (
-        <div className="loan">
-            <div className="loan-info">
-                <div className="loan-info-item">
-                    <p className="loan-title">Nazwa:</p>
-                    <p className="loan-desc">{props.loan.name}</p>
-                </div>
-                <div className="loan-info-item">
-                    <p className="loan-title">Ilość:</p>
-                    <p className="loan-desc">{props.loan.amount}</p>
-                </div>
-                <div className="loan-info-item">
-                    <p className="loan-title">Data pożyczenia:</p>
-                    <p className="loan-desc">{props.loan.created}</p>
-                </div>
-            </div>
-        </div>
     )
 }
 

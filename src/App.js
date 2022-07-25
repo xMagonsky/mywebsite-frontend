@@ -10,7 +10,7 @@ const ENDING_DURATION = 300
 
 function App() {
   const [status, setStatus] = useState("LOADING")
-  const [showPanel, setShowPanel] = useState(false)
+  const [panel, setPanel] = useState({ show: false, admin: false })
 
   useEffect(() => {
     APIreq({
@@ -25,7 +25,10 @@ function App() {
       console.log("AUTH: ok")
       setStatus("LOGGED_IN")
       setTimeout(() => {
-        setShowPanel(true)
+        setPanel({
+          show: true,
+          admin: result.admin
+        })
       }, ENTRY_DURATION + ENDING_DURATION);
     })
   }, [])
@@ -33,7 +36,7 @@ function App() {
   return (
     <>
       <Title status={status} entryDuration={ENTRY_DURATION} endingDuration={ENDING_DURATION} />
-      { showPanel ? <MainPanel /> : <LoginContainer /> }
+      { panel.show ? <MainPanel admin={panel.admin} /> : <LoginContainer /> }
     </>
   );
 }
@@ -62,18 +65,18 @@ function LoginContainer() {
 
 
 function LoginForm() {
-
   const handleSubmit = (e) => {
     e.preventDefault()
     const login = e.target.login.value
     const password = e.target.password.value
+    const rememberme = e.target.rememberme.checked
     APIreq({
       url: "/login",
       method: "POST",
       body: {
         login: login,
         password: password,
-        rememberMe: true
+        rememberMe: rememberme
       }
     }, (status, result) => {
       if (status !== 200) {
@@ -95,6 +98,10 @@ function LoginForm() {
         <p>
           <span>Password: </span>
           <input type="password" name="password" />
+        </p>
+        <p>
+          <span>Remember me: </span>
+          <input type="checkbox" name="rememberme" />
         </p>
         <input type="submit" value="OK" />
       </form>

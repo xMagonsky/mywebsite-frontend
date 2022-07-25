@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
+import AdminPanel from "./AdminPanel";
 import Money from "./Money";
 
 function MainPanel(props) {
     const [style, setStyle] = useState({})
 
     useEffect(() => {
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             setStyle({ opacity: 1 })
-        }, 5);
+        });
     }, [])
 
     return (
         <div className="main-container">
             <div className="panel" style={style}>
-                <Money />
+                {props.admin ?
+                    <AdminPanel /> :
+                    <Money /> 
+                }
             </div>
         </div>
     );

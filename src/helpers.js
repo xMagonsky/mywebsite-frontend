@@ -16,6 +16,9 @@ export function APIreq(options, callback) {
             res.json().then(json => {
                 callback(res.status, json)
             })
+        }else {
+
+            console.log(404)
         }
     })
 }
