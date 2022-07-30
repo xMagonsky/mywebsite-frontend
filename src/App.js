@@ -1,8 +1,8 @@
 import "./App.css";
-import Title from "./Title";
-import MainPanel from "./MainPanel";
 import { useEffect, useState } from "react";
 import { APIreq } from "./helpers";
+import Title from "./Title";
+import MainPanel from "./LoggedInComponents/MainPanel";
 
 const ENTRY_DURATION = 1000
 const ENDING_DURATION = 300
@@ -36,7 +36,9 @@ function App() {
   return (
     <>
       <Title status={status} entryDuration={ENTRY_DURATION} endingDuration={ENDING_DURATION} />
-      { panel.show ? <MainPanel admin={panel.admin} /> : <LoginContainer /> }
+      {panel.show ?
+        <MainPanel admin={panel.admin} /> : <LoginContainer />
+      }
     </>
   );
 }

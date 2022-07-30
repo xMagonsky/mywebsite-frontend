@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import AdminPanel from "./AdminPanel";
-import Money from "./Money";
+import AdminPanel from "./AdminComponents/AdminPanel";
+import Money from "./UserComponents/Money";
 
 function MainPanel(props) {
     const [style, setStyle] = useState({})
@@ -15,8 +15,7 @@ function MainPanel(props) {
         <div className="main-container">
             <div className="panel" style={style}>
                 {props.admin ?
-                    <AdminPanel /> :
-                    <Money /> 
+                    <AdminPanel /> : <Money /> 
                 }
             </div>
         </div>

@@ -1,3 +1,8 @@
+export const APIheaders = {
+    "Content-Type": "application/json",
+    'Accept': 'application/json'
+}
+
 export function APIreq(options, callback) {
     const url = "/api" + options.url
     const method = options.method ?? "get"
@@ -5,10 +10,7 @@ export function APIreq(options, callback) {
     
     fetch(url, {
         method: method,
-        headers: {
-            "Content-Type": "application/json",
-            'Accept': 'application/json'
-        },
+        headers: APIheaders,
         body: JSON.stringify(body),
     })
     .then(res => {
