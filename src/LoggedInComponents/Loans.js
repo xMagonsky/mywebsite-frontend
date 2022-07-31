@@ -60,20 +60,22 @@ function Loans({admin = false}) {
 
     return (
         <LoansContext.Provider value={[loans, setLoans]}>
-            <div className="loan-admin-header">
-                <button onClick={() => {setShowLoanModal(true)}}>dodaj</button>
-                <Modal open={showLoanModal} setOpen={setShowLoanModal}>
-                    <h2>Dodaj dług</h2>
-                    <form>
-                        <p>Nazwa:</p>
-                        <input type="text" name="name" />
-                        <p>Wartość:</p>
-                        <input type="text" name="amount" />
-                        <br /><br /><br /><br /><br />
-                        <input onClick={handleAddLoan} type="submit" value="Dodaj" />
-                    </form>
-                </Modal>
-            </div>
+            {admin &&
+                <div className="loan-admin-header">
+                    <button onClick={() => {setShowLoanModal(true)}}>dodaj</button>
+                    <Modal open={showLoanModal} setOpen={setShowLoanModal}>
+                        <h2>Dodaj dług</h2>
+                        <form>
+                            <p>Nazwa:</p>
+                            <input type="text" name="name" />
+                            <p>Wartość:</p>
+                            <input type="text" name="amount" />
+                            <br /><br /><br /><br /><br />
+                            <input onClick={handleAddLoan} type="submit" value="Dodaj" />
+                        </form>
+                    </Modal>
+                </div>
+            }
             <div className="flex-fill-rest">
                 {(Object.keys(loans).length !== 0) &&
                     loans.map((loan) => {
