@@ -207,17 +207,19 @@ function Title(props) {
         }
 
         const animNotLoggedIn = () => {
-            const offsetLogo = mobile ? -40 : -70
-            const offsetText = mobile ? 80 : 130
+            const offsetLogo = mobile ? 40 : 60
+            const offsetText = mobile ? 75 : 140
+            const heightText = mobile ? 50 : 75
+            
             setTimeout(() => {
                 svg.style.transition = `transform ${endingDuration}ms ease`
-                svgTransforms.translate = `translate(-50%, calc(-50% + ${offsetLogo}px))`
+                svgTransforms.translate = `translate(-50%, calc(-50% - ${offsetLogo}px))`
                 svg.style.transform = getTransforms()
 
                 setTextElement(
                     <NotLoggedIn 
-                        titleStyles={{transition: `transform ${endingDuration}ms ease`, transform: `translateY(-100%)`, top: `calc(50vh + ${offsetText}px)`}}
-                        titleTextStyles={{transition: `transform ${endingDuration}ms ease`, transform: `translateY(0)`}}
+                        titleStyles={{bottom: `calc(50% - ${offsetText}px)`}}
+                        titleAnimStyles={{transition: `height ${endingDuration}ms`, height: `${heightText}px`}}
                     />
                 )
             }, endingDuration * 0.2);
@@ -295,19 +297,17 @@ const LoggedIn = (props) => {
 }
 
 const NotLoggedIn = (props) => {
-    const [titleStyles, setTitleStyles] = useState({})
-    const [titleTextStyles, setTitleTextStyles] = useState({})
+    const [titleStyles, setTitleStyles] = useState(props.titleStyles)
 
     useEffect(() => {
         requestAnimationFrame(() => {
-            setTitleStyles(props.titleStyles)
-            setTitleTextStyles(props.titleTextStyles)
+            setTitleStyles({...props.titleStyles, ...props.titleAnimStyles})
         });
-    }, [props.titleStyles, props.titleTextStyles])
+    }, [props.titleStyles, props.titleAnimStyles])
 
     return (
         <div id="title-notloggedin" style={titleStyles}>
-            <span style={titleTextStyles}>
+            <span>
                 Magonsky <br />
                 Industries
             </span>
