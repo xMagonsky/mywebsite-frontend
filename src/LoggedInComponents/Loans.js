@@ -106,8 +106,8 @@ function Loan(props) {
                     <p className="loan-desc">{props.loan.amount}</p>
                 </div>
                 <div className="loan-info-item">
-                    <p className="loan-title">Data pożyczenia:</p>
-                    <p className="loan-desc">{props.loan.created}</p>
+                    <p className="loan-title">Data utworzenia:</p>
+                    <p className="loan-desc">{new Date(props.loan.created).toLocaleString()}</p>
                 </div>
                 {props.admin &&
                     <div className="loan-admin-icon" onClick={handleShowAdmin}>
