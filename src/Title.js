@@ -179,7 +179,7 @@ function Title(props) {
             //slideup
             setTimeout(() => {
                 svg.style.transition = `transform ${endingDuration * 0.8}ms ease`
-                svgTransforms.translate = `translate(-50%, calc(-50vh - ${offsetLogo}px))`
+                svgTransforms.translate = `translate(-50%, calc(${-window.innerHeight/2}px - ${offsetLogo}px))`
                 svgTransforms.scale = `scale(${scaleLogo})`
                 svg.style.transform = getTransforms()
             }, endingDuration * 0.2);
@@ -190,7 +190,7 @@ function Title(props) {
     
                 const centerOffset = mobile ? 70 : (10 + 177)
                 svg.style.transition = `transform ${endingDuration}ms ease`
-                svgTransforms.translate = `translate(calc(-50% - ${centerOffset}px), calc(-50vh - ${offsetLogo}px))`
+                svgTransforms.translate = `translate(calc(-50% - ${centerOffset}px), calc(${-window.innerHeight/2}px - ${offsetLogo}px))`
                 svg.style.transform = getTransforms()
                 setTimeout(() => {
                     svg.style.transition = ""
