@@ -1,6 +1,7 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Description
+This is the frontend for my website project, created using React and Create React App. It serves as the user interface for the website, providing an interactive and responsive experience.
+It also has a nice looking welcome animation.
+[Check it here](https://magonsky.scay.net/)
 
 ## Available Scripts
 
